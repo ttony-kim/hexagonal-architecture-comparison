@@ -12,7 +12,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserReadUseCase {
-
     private final UserReadPort userReadPort;
 
     @Override

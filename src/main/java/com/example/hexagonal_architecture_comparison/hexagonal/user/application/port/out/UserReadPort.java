@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface UserReadPort {
     List<User> loadAllUsers();
-
     User loadUserById(UserId id);
 }

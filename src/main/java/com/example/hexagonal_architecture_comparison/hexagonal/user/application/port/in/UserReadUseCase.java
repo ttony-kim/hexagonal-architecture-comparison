@@ -7,6 +7,5 @@ import java.util.List;
 
 public interface UserReadUseCase {
     List<User> getAllUsers();
-
     User getUserById(GetUserQuery userQuery);
 }

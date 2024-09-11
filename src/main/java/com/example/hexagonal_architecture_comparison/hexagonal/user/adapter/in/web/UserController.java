@@ -17,7 +17,6 @@ import java.util.List;
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
-
     private final UserReadUseCase userReadUseCase;
     private final UserResponseMapper mapper;
 

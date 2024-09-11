@@ -1,7 +1,6 @@
 package com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.web.response;
 
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User;
-import lombok.Builder;
 import lombok.Getter;
 
 @Getter

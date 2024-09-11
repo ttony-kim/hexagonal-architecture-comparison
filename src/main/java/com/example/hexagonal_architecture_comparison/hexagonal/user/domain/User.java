@@ -1,18 +1,24 @@
 package com.example.hexagonal_architecture_comparison.hexagonal.user.domain;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Value;
 
 @Getter
-@Builder
-@AllArgsConstructor
 public class User {
-
-    private final UserId id;
+    private UserId id;
     private String name;
     private Integer age;
+
+    private User(UserId id, String name, Integer age) {
+        this.id = id;
+        this.name = name;
+        this. age = age;
+    }
+
+    public static User from(UserId id, String name, Integer age) {
+        return new User(id, name, age);
+    }
 
     @Value
     @AllArgsConstructor(staticName = "of")

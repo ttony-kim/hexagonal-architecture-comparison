@@ -10,11 +10,7 @@ import java.util.List;
 public class UserPersistenceMapper {
 
     public User mapToDomainEntity(UserEntity entity) {
-        return User.builder()
-                .id(User.UserId.of(entity.getId()))
-                .name(entity.getName())
-                .age(entity.getAge())
-                .build();
+        return User.from(User.UserId.of(entity.getId()), entity.getName(), entity.getAge());
     }
 
 }

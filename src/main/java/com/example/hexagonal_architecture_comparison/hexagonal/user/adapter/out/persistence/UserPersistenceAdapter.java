@@ -12,7 +12,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class UserPersistenceAdapter implements UserReadPort {
-
     private final UserRepository userRepository;
     private final UserPersistenceMapper mapper;
 
