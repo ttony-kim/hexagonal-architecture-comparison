@@ -1,11 +1,11 @@
 package com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in;
 
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.query.GetAllUsersQuery;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.query.GetUserQuery;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 public interface UserReadUseCase {
-    List<User> getAllUsers();
-    User getUserById(GetUserQuery userQuery);
+    Page<User> getAllUsers(GetAllUsersQuery query);
+    User getUserById(GetUserQuery query);
 }

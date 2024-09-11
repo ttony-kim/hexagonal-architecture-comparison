@@ -10,9 +10,8 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "tbl_user")
+@Table(name = "tbl_user1")
 public class UserEntity {
-
     @Id
     @Column(name = "user_id")
     private Long id;
@@ -20,5 +19,4 @@ public class UserEntity {
     private String name;
     private Integer age;
     private String status;
-
 }
