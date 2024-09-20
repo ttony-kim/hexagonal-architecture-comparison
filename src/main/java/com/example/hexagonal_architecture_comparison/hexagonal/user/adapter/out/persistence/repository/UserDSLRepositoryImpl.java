@@ -1,9 +1,7 @@
 package com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.repository;
 
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.entity.UserEntity;
-import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.criteria.UserSearchCriteria;
-import com.querydsl.core.Tuple;
-import com.querydsl.core.types.Projections;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.parameters.UserLoadParameters;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -21,22 +19,22 @@ public class UserDSLRepositoryImpl implements UserDSLRepository {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<UserEntity> findBySearchCriteria(UserSearchCriteria userSearchCriteria) {
+    public Page<UserEntity> findBySearchCriteria(UserLoadParameters userLoadParameters) {
         List<UserEntity> list = queryFactory.selectFrom(userEntity)
-                .where(likeUserName(userSearchCriteria.getName()),
-                        eqUserAge(userSearchCriteria.getAge()))
-                .offset(userSearchCriteria.getPageable().getOffset())
-                .limit(userSearchCriteria.getPageable().getPageSize())
+                .where(likeUserName(userLoadParameters.getName()),
+                        eqUserAge(userLoadParameters.getAge()))
+                .offset(userLoadParameters.getPageable().getOffset())
+                .limit(userLoadParameters.getPageable().getPageSize())
                 .fetch();
 
         Long count = queryFactory
                 .select(userEntity.count())
                 .from(userEntity)
-                .where(likeUserName(userSearchCriteria.getName()),
-                        eqUserAge(userSearchCriteria.getAge()))
+                .where(likeUserName(userLoadParameters.getName()),
+                        eqUserAge(userLoadParameters.getAge()))
                 .fetchOne();
 
-        return new PageImpl<>(list, userSearchCriteria.getPageable(), count);
+        return new PageImpl<>(list, userLoadParameters.getPageable(), count);
     }
 
     private BooleanExpression likeUserName(String name) {

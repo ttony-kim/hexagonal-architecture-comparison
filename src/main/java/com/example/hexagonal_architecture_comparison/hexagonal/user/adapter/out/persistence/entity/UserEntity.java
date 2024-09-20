@@ -1,6 +1,6 @@
 package com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.entity;
 
-import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.enums.Status;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.enums.UserStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -19,15 +19,15 @@ public class UserEntity {
 
     private String name;
     private Integer age;
-    private Status status;
+    private UserStatus userStatus;
 
-    private UserEntity(String name, Integer age, Status status) {
+    private UserEntity(String name, Integer age, UserStatus userStatus) {
         this.name = name;
         this.age = age;
-        this.status = status;
+        this.userStatus = userStatus;
     }
 
-    public static UserEntity from(String name, Integer age, Status status) {
-        return new UserEntity(name, age, status);
+    public static UserEntity from(String name, Integer age, UserStatus userStatus) {
+        return new UserEntity(name, age, userStatus);
     }
 }

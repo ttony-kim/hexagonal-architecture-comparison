@@ -6,7 +6,7 @@ import com.example.hexagonal_architecture_comparison.hexagonal.user.application.
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.query.GetAllUsersQuery;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserCreatePort;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserReadPort;
-import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.criteria.UserSearchCriteria;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.parameters.UserLoadParameters;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
@@ -21,8 +21,8 @@ public class UserService implements UserReadUseCase, UserCreateUseCase {
 
     @Override
     public Page<User> getAllUsers(GetAllUsersQuery query) {
-        UserSearchCriteria userSearchCriteria = UserSearchCriteria.from(query);
-        return userReadPort.loadAllUsers(userSearchCriteria);
+        UserLoadParameters userLoadParameters = UserLoadParameters.from(query);
+        return userReadPort.loadAllUsers(userLoadParameters);
     }
 
     @Override

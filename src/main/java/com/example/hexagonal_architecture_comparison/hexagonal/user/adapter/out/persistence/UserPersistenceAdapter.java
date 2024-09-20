@@ -1,11 +1,11 @@
 package com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence;
 
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.entity.UserEntity;
-import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.enums.Status;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.enums.UserStatus;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.repository.UserRepository;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserCreatePort;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserReadPort;
-import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.criteria.UserSearchCriteria;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.parameters.UserLoadParameters;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
@@ -20,8 +20,8 @@ public class UserPersistenceAdapter implements UserReadPort, UserCreatePort {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<User> loadAllUsers(UserSearchCriteria userSearchCriteria) {
-        Page<UserEntity> userEntities = userRepository.findBySearchCriteria(userSearchCriteria);
+    public Page<User> loadAllUsers(UserLoadParameters userLoadParameters) {
+        Page<UserEntity> userEntities = userRepository.findBySearchCriteria(userLoadParameters);
         return userEntities.map(mapper::mapToDomain);
     }
 
@@ -35,7 +35,7 @@ public class UserPersistenceAdapter implements UserReadPort, UserCreatePort {
 
     @Override
     public void saveUser(User user) {
-        UserEntity userEntity = mapper.mapToEntity(user, Status.INSERT);
+        UserEntity userEntity = mapper.mapToEntity(user, UserStatus.INSERT);
         userRepository.save(userEntity);
     }
 }
