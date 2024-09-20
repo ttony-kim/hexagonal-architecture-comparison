@@ -4,8 +4,8 @@ import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.w
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.web.response.UserResponse;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.UserReadUseCase;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.query.GetAllUsersQuery;
-import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.query.GetUserQuery;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User.UserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,8 +31,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponse> getUserById(@PathVariable Long id) {
-        GetUserQuery query = GetUserQuery.of(id);
-        User user = userReadUseCase.getUserById(query);
+        User user = userReadUseCase.getUserById(UserId.of(id));
         return mapper.mapToUserResponse(user);
     }
 }
