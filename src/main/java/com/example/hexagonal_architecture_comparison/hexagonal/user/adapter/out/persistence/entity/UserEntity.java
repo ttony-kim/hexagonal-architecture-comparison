@@ -1,10 +1,7 @@
 package com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.entity;
 
-import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.enums.UserStatus;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.UserStatus;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -19,15 +16,25 @@ public class UserEntity {
 
     private String name;
     private Integer age;
-    private UserStatus userStatus;
+    @Enumerated(value = EnumType.STRING)
+    private UserStatus status;
 
-    private UserEntity(String name, Integer age, UserStatus userStatus) {
+    private UserEntity(String name, Integer age) {
         this.name = name;
         this.age = age;
-        this.userStatus = userStatus;
     }
 
-    public static UserEntity from(String name, Integer age, UserStatus userStatus) {
-        return new UserEntity(name, age, userStatus);
+    public static UserEntity from(String name, Integer age) {
+        return new UserEntity(name, age);
+    }
+
+    public void insert() {
+        this.status = UserStatus.INSERT;
+    }
+
+    public void update(String name, Integer age) {
+        this.name = name;
+        this.age = age;
+        this.status = UserStatus.UPDATE;
     }
 }

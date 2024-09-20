@@ -1,10 +1,10 @@
 package com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence;
 
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.entity.UserEntity;
-import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.enums.UserStatus;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.repository.UserRepository;
-import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserCreatePort;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserReadPort;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserCreatePort;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserUpdatePort;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.parameters.UserLoadParameters;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User.UserId;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Transactional
-public class UserPersistenceAdapter implements UserReadPort, UserCreatePort {
+public class UserPersistenceAdapter implements UserReadPort, UserCreatePort, UserUpdatePort {
     private final UserRepository userRepository;
     private final UserPersistenceMapper mapper;
 
@@ -35,7 +35,14 @@ public class UserPersistenceAdapter implements UserReadPort, UserCreatePort {
 
     @Override
     public void saveUser(User user) {
-        UserEntity userEntity = mapper.mapToEntity(user, UserStatus.INSERT);
+        UserEntity userEntity = mapper.mapToEntity(user);
+        userEntity.insert();
         userRepository.save(userEntity);
+    }
+
+    @Override
+    public void updateUser(User user) {
+        UserEntity userEntity = userRepository.findById(user.getId().getValue()).orElseThrow();
+        userEntity.update(user.getName(), user.getAge());
     }
 }

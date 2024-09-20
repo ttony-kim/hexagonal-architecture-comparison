@@ -2,10 +2,13 @@ package com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.
 
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.web.request.UserCreateRequest;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.web.request.UserSearchRequest;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.web.request.UserUpdateRequest;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.web.response.UserResponse;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.UserCreateUseCase;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.UserReadUseCase;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.UserUpdateUseCase;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.command.CreateUserCommand;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.command.UpdateUserCommand;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.query.GetAllUsersQuery;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User.UserId;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserReadUseCase userReadUseCase;
     private final UserCreateUseCase userCreateUseCase;
+    private final UserUpdateUseCase userUpdateUseCase;
     private final UserResponseMapper mapper;
 
     @GetMapping
@@ -40,6 +44,12 @@ public class UserController {
     public void createUser(@RequestBody UserCreateRequest request) {
         CreateUserCommand command = CreateUserCommand.from(request);
         userCreateUseCase.createUser(command);
+    }
+
+    @PutMapping("/{id}")
+    public void updateUser(@PathVariable Long id, @RequestBody UserUpdateRequest request) {
+        UpdateUserCommand command = UpdateUserCommand.from(id, request);
+        userUpdateUseCase.updateUser(command);
     }
 }
 

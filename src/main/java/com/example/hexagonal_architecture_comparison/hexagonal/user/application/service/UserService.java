@@ -2,10 +2,13 @@ package com.example.hexagonal_architecture_comparison.hexagonal.user.application
 
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.UserCreateUseCase;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.UserReadUseCase;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.UserUpdateUseCase;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.command.CreateUserCommand;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.command.UpdateUserCommand;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.query.GetAllUsersQuery;
-import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserCreatePort;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserReadPort;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserCreatePort;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserUpdatePort;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.parameters.UserLoadParameters;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User.UserId;
@@ -15,9 +18,10 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserReadUseCase, UserCreateUseCase {
+public class UserService implements UserReadUseCase, UserCreateUseCase, UserUpdateUseCase {
     private final UserReadPort userReadPort;
     private final UserCreatePort userCreatePort;
+    private final UserUpdatePort userUpdatePort;
 
     @Override
     public Page<User> getAllUsers(GetAllUsersQuery query) {
@@ -34,5 +38,11 @@ public class UserService implements UserReadUseCase, UserCreateUseCase {
     public void createUser(CreateUserCommand command) {
         User user = User.from(command.getName(), command.getAge());
         userCreatePort.saveUser(user);
+    }
+
+    @Override
+    public void updateUser(UpdateUserCommand command) {
+        User user = User.from(UserId.of(command.getId()), command.getName(), command.getAge());
+        userUpdatePort.updateUser(user);
     }
 }
