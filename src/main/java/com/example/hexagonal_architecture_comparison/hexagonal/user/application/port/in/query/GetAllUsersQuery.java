@@ -1,6 +1,6 @@
 package com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.query;
 
-import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.web.request.UserRequest;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.web.request.UserSearchRequest;
 import lombok.Getter;
 import org.springframework.data.domain.Pageable;
 
@@ -16,7 +16,7 @@ public class GetAllUsersQuery {
         this.pageable = pageable;
     }
 
-    public static GetAllUsersQuery from(UserRequest request, Pageable pageable) {
+    public static GetAllUsersQuery from(UserSearchRequest request, Pageable pageable) {
         return new GetAllUsersQuery(request.getName(), request.getAge(), pageable);
     }
 }

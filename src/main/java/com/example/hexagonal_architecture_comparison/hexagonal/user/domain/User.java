@@ -20,6 +20,10 @@ public class User {
         return new User(id, name, age);
     }
 
+    public static User from(String name, Integer age) {
+        return new User(null, name, age);
+    }
+
     @Value
     @AllArgsConstructor(staticName = "of")
     public static class UserId {
