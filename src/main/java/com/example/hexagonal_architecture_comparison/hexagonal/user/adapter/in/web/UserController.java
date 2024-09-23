@@ -5,6 +5,7 @@ import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.w
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.web.request.UserUpdateRequest;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.in.web.response.UserResponse;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.UserCreateUseCase;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.UserDeleteUseCase;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.UserReadUseCase;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.UserUpdateUseCase;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.in.command.CreateUserCommand;
@@ -25,6 +26,7 @@ public class UserController {
     private final UserReadUseCase userReadUseCase;
     private final UserCreateUseCase userCreateUseCase;
     private final UserUpdateUseCase userUpdateUseCase;
+    private final UserDeleteUseCase userDeleteUseCase;
     private final UserResponseMapper mapper;
 
     @GetMapping
@@ -50,6 +52,11 @@ public class UserController {
     public void updateUser(@PathVariable Long id, @RequestBody UserUpdateRequest request) {
         UpdateUserCommand command = UpdateUserCommand.from(id, request);
         userUpdateUseCase.updateUser(command);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userDeleteUseCase.deleteUser(UserId.of(id));
     }
 }
 

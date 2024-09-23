@@ -2,6 +2,7 @@ package com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out
 
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.entity.UserEntity;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.repository.UserRepository;
+import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserDeletePort;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserReadPort;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserCreatePort;
 import com.example.hexagonal_architecture_comparison.hexagonal.user.application.port.out.UserUpdatePort;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Transactional
-public class UserPersistenceAdapter implements UserReadPort, UserCreatePort, UserUpdatePort {
+public class UserPersistenceAdapter implements UserReadPort, UserCreatePort, UserUpdatePort, UserDeletePort {
     private final UserRepository userRepository;
     private final UserPersistenceMapper mapper;
 
@@ -44,5 +45,11 @@ public class UserPersistenceAdapter implements UserReadPort, UserCreatePort, Use
     public void updateUser(User user) {
         UserEntity userEntity = userRepository.findById(user.getId().getValue()).orElseThrow();
         userEntity.update(user.getName(), user.getAge());
+    }
+
+    @Override
+    public void deleteUser(UserId id) {
+        UserEntity userEntity = userRepository.findById(id.getValue()).orElseThrow();
+        userRepository.delete(userEntity);
     }
 }
