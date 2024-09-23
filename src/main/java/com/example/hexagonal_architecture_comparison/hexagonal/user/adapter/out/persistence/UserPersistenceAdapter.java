@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 @Transactional
-public class UserPersistenceAdapter implements UserReadPort, UserCreatePort, UserUpdatePort, UserDeletePort {
+class UserPersistenceAdapter implements UserReadPort, UserCreatePort, UserUpdatePort, UserDeletePort {
     private final UserRepository userRepository;
     private final UserPersistenceMapper mapper;
 

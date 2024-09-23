@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserResponseMapper {
+class UserResponseMapper {
     ResponseEntity<Page<UserResponse>> mapToUserResponse(Page<User> users) {
         Page<UserResponse> response = users.map(UserResponse::fromDomain);
 

@@ -14,7 +14,7 @@ import java.util.List;
 import static com.example.hexagonal_architecture_comparison.hexagonal.user.adapter.out.persistence.entity.QUserEntity.userEntity;
 
 @RequiredArgsConstructor
-public class UserDSLRepositoryImpl implements UserDSLRepository {
+class UserDSLRepositoryImpl implements UserDSLRepository {
 
     private final JPAQueryFactory queryFactory;
 

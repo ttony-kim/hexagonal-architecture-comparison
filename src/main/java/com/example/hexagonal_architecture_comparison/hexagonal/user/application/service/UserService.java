@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserService implements UserReadUseCase, UserCreateUseCase, UserUpdateUseCase, UserDeleteUseCase {
+class UserService implements UserReadUseCase, UserCreateUseCase, UserUpdateUseCase, UserDeleteUseCase {
     private final UserReadPort userReadPort;
     private final UserCreatePort userCreatePort;
     private final UserUpdatePort userUpdatePort;

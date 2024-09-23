@@ -5,7 +5,7 @@ import com.example.hexagonal_architecture_comparison.hexagonal.user.domain.User;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserPersistenceMapper {
+class UserPersistenceMapper {
     public User mapToDomain(UserEntity entity) {
         return User.from(User.UserId.of(entity.getId()), entity.getName(), entity.getAge());
     }
